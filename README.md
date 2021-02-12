@@ -1,5 +1,5 @@
 # **Project 3: Python Script to Explore U.S. Bikeshare Data**
-This project uses Python to understand U.S. bikeshare data. For this project, I have calculated statistics and built an interactive environment where a user has an option to select and filter for a dataset to analyse.
+This project uses Python to understand U.S. bikeshare data. For this project, statistics have been calculated and an interactive environment has been built, where a user has an option to select and filter for a dataset to analyse.
 
 ## How To Run Script
 You can run the script using a Python integrated development environment (IDE) such as PyCharm. To install  PyCharm, you will need to download the Anaconda Navigator installer. This script is written in Python 3, therefore you will need the Python 3.x version of the installer. After downloading and installing Anaconda, you will be able to launch PyCharm. 
