@@ -22,31 +22,39 @@ def get_filters():
     print('\nHello! Let\'s explore some US bikeshare data!\n')
     
     # Get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    
-    city = input('Would you like to see data for Chicago, New York City, or Washington?\n').title()
-    print('Your selected city was: ', city) 
-    while city not in CITY_DATA.keys():
-        print('\nInvalid answer, please consider your spelling and try again by inputing either Chicago, New York City, or Washington')
-        city = input('Would you like to see data for Chicago, New York City, or Washington?\n').title()            
+    while True:
+        city = input('Would you like to see data for Chicago, New York City, or Washington?\n').title()
+        print('Your selected city was: ', city) 
+        if city not in CITY_DATA.keys():
+            print('\nInvalid answer, please consider your spelling and try again by inputing either Chicago, New York City, or Washington')
+            continue
+            city = input('Would you like to see data for Chicago, New York City, or Washington?\n').title()            
+        else:
+            break
                  
         # Get user input for month (all, january, february, ... , june)  
-        
-    month = input('\nWhich month you would like to see the data (January, February, March, April, May, June or all)? Please type-out the full name of the month.\n').title()
-    print('Your selected month was: ', month)
-    while month not in MONTHS_LIST:
-        print('\nInvalid answer, please consider your spelling and try again!')
-        month = input('Which month you would like to see the data (January, February, March, April, May, June or all)? Please type out the full name of th month.\n').title()
+    while True: 
+        month = input('\nWhich month you would like to see the data (January, February, March, April, May, June or all)? Please type-out the full name of the month.\n').title()
+        print('Your selected month was: ', month)
+        if month not in MONTHS_LIST:
+            print('\nInvalid answer, please consider your spelling and try again!')
+            continue
+            month = input('Which month you would like to see the data (January, February, March, April, May, June or all)? Please type out the full name of th month.\n').title()
+        else:
+            break
  
     # Get user input for day of week (all, monday, tuesday, ... sunday)   
-    day = input('\nWhich day you would like to see the data? please type a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or all.\n').title()
-    print('Your selected month was: ', day)
-    while day not in DAYS_LIST:
-        print('\nInvalid answer, please consider your spelling and try again!').title()
-        day = input('Which day you would like to see the data? please type a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or all.\n')      
+    try:
+        day = input('\nWhich day you would like to see the data? please type a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or all.\n').title()
+        while day not in DAYS_LIST:
+            print('\nInvalid answer, please consider your spelling and try again!')
+            day = input('Which day you would like to see the data? please type a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or all.\n')      
         print('Your selected day was: ', day) 
                          
-
-    return city, month, day           
+              
+        return city, month, day
+    except Exception as e:
+        print('An error has occured with your inputs: {}'.format(e))           
     print('-'*40)
     
 
@@ -145,10 +153,10 @@ def station_stats(df, city):
 
     # Display most frequent combination of start station and end station trip
     try:
-        df['Trip Combination'] = df['Start Station'] + ' to ' + df['End Station']
+        df['Trip Combination'] = df['Start Station'] + ' to ' + df['Start Station']
         common_trip_combination = df['Trip Combination'].mode()[0]
         common_trip_combination_amount = df.groupby(['Start Station', 'End Station']).size().max()
-        print('The most frequent combination of start station and end station trip is:\n', common_trip_combination, '\n and was cycled', common_trip_combination_amount, 'times')
+        print('The most frequent combination of start station and end station trip is:\n', common_trip_combination, '\n and was driven', common_trip_combination_amount, 'times')
     except Exception as e:
         print('Couldn\'t obtain the most frequent combination of start station and end station trip, as an Error has occurred:{}'.format(e))
 
@@ -201,6 +209,7 @@ def user_stats(df, city):
     except Exception as e:
         print('Couldn\'t obtain the amount and gender of users, as an Error has occurred: {}'.format(e))      
     
+
     # Display earliest, most recent, and most common year of birth
     try:
         earliest_birth_year = int(df['Birth Year'].min())
@@ -212,8 +221,7 @@ def user_stats(df, city):
               ' Most of our customers are born in:', common_birth_year)
     except Exception as e:
         print('Couldn\'t obtain the age range of our customers, as an Error has occurred: {}'.format(e))
-
-     
+  
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -238,7 +246,7 @@ def individual_data(df):
 
     #Extra while loop provides the option to display extra infromation if the user wants to continue viewing the data
     while view_raw_data == 'yes':
-        print('Would you like to view more raw data?')
+        print('Do you wish to view more raw data?')
         start_loc += 5
         view_raw_data = input().lower()
         #If user enters Yes, this displays the next 5 rows of data
@@ -246,7 +254,8 @@ def individual_data(df):
              print(df[start_loc:start_loc+5])
         #If user enters No, extra while loop will break and user will no longer be able to continue viewing the data
         elif view_raw_data != 'yes':
-             break                
+             break
+                
     print('-'*80)
                 
 
@@ -268,4 +277,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
